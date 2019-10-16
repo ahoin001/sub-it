@@ -60,13 +60,8 @@ app.use(session({
 // 🚨🚨🚨 must come after the sessions 🚨🚨🚨
 require("./configs/passport/passport.setup")(app);
 
-
-
-
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
-
-
 
 const index = require('./routes/index');
 app.use('/', index);

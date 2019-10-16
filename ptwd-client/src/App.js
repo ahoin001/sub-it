@@ -42,7 +42,7 @@ class App extends React.Component {
     // console.log("the state in APPJS: ", this.state);
     return (
       <div >
-        <header>
+        <header> 
           <nav>
             <NavLink to="/" > Home </NavLink>
             <NavLink to="/signup-page"> Signup </NavLink>
