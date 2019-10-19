@@ -42,7 +42,7 @@ export default class Signup extends React.Component {
     render(){
         console.log("Do I have user in Signup: ", this.props.currentUser)
         const { fullName, email, password } = this.state;
-        // console.log("STATE: ", this.state);
+        
         if(this.props.currentUser){
             return(
                 <div>
