@@ -28,7 +28,7 @@ const captionProjectSchema = new Schema({
     });
 
 // "Project" model --> "projects" collection
-const ProjectSubtitle = mongoose.model("ProjectSubtitle", captionProjectSchema);
-module.exports = ProjectSubtitle;
+const ProjectCaption = mongoose.model("ProjectCaption", captionProjectSchema);
+module.exports = ProjectCaption;
 
 
