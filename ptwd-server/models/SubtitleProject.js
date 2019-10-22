@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const subtitleProjectSchema = new Schema({
-  title: {
+  userId: {
+    type: String,
+    required: true
+},
+title: {
     type: String,
     required: true,
     minlength: 2
