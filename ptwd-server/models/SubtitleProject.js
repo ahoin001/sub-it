@@ -36,7 +36,7 @@ language: {
   });
 
 // "Project" model --> "projects" collection
-const SubtitleProject = mongoose.model("ProjectSubtitle", subtitleProjectSchema);
+const SubtitleProject = mongoose.model("SubtitleProject", subtitleProjectSchema);
 module.exports = SubtitleProject;
 
 

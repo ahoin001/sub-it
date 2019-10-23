@@ -4,10 +4,14 @@ const SubtitleProject = require('../models/SubtitleProject');
 
 subtitleRouter.get('/dashboard', (req,res,next) => {  
   SubtitleProject
-  .find({ 'userId': req.user._id }, (err, projects) => {
-    console.log(projects);
-  });
+  // Finding all subtitle projects with the userId matching the current session _id
+  // These results should populate the user's landing page/dashboard
+  .find({ 'userId': req.user._id })
+  .then((projects) => {
+  console.log(projects);
   res.render('index');
+
+  });
 });
 
 subtitleRouter.post('/dashboard/create-sub', (req,res,next) => {
