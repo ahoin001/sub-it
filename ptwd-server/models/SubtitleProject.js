@@ -3,9 +3,8 @@ const Schema = mongoose.Schema;
 
 const subtitleProjectSchema = new Schema({
   userId: {
-    type: String,
-    required: true
-},
+    type: mongoose.Schema.Types.ObjectId, ref: 'User'
+  },
 title: {
     type: String,
     required: true,

@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const captionProjectSchema = new Schema({
     userId: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
     },
     title: {
         type: String,
