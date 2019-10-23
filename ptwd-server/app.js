@@ -77,8 +77,8 @@ app.use("/", authRoutes);
 const dummyRoute = require('./routes/dummy');
 app.use('/', dummyRoute);
 
-const subtitleRoute = require('./routes/project.routes');
-app.use('/', subtitleRoute);
+const projectRoute = require('./routes/project.routes');
+app.use('/', projectRoute);
 
 
 module.exports = app;
