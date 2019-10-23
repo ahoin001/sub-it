@@ -17,6 +17,7 @@ const userSchema = new Schema({
     type: String,
     required: true
   }, 
+  
   // TODO TEST 
   //RELATIONAL DATA, EACH USER CAN HAVE MULTIPLE CAPTION OR MULTIPLE SUBTITLE PROJECTS
   subtitleProjects: [{

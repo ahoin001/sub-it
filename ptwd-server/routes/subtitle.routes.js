@@ -5,21 +5,40 @@ const SubtitleProject = require("../models/SubtitleProject");
 // // This package allows access to uploaded files from req.files
 const fileUpload = require('express-fileupload');
 
-// Import CLoudinary from config files where we set data
+// Import CLoudinary from config files where we set access keys
 const cloudinary = require('../configs/cloudinaryconfig');
 
-subtitleRouter.get('/dashboard/:id', (req, res, next) => {
-  const id = req.params.id;
-  console.log(id);
-  
-subtitleRouter.get('/dashboard', (req,res,next) => {  
-  SubtitleProject
-  // Finding all subtitle projects with the userId matching the current session _id
-  // These results should populate the user's landing page/dashboard
-  .find({ 'userId': req.user._id })
-  .then((projects) => {
-  console.log(projects);
-  res.render('index');
+/*******************************************************
+ * 
+ *                   GET ROUTES
+ * 
+ * *****************************************************/
+// TODO Something here is not closed , Whenevr it is uncommented it messes up export
+
+// subtitleRouter.get('/dashboard/:id', (req, res, next) => {
+//   const id = req.params.id;
+//   console.log(id);
+
+// subtitleRouter.get('/dashboard', (req,res,next) => {  
+//   SubtitleProject
+//   // Finding all subtitle projects with the userId matching the current session _id
+//   // These results should populate the user's landing page/dashboard
+//   .find({ 'userId': req.user._id })
+//   .then((projects) => {
+//   console.log(projects);
+//   res.render('index');})
+
+// // Test get route to pull user object id
+// subtitleRouter.get('/subtitleroute', (req, res, next) => {
+//   console.log('this is the sub route ');
+//   res.render('index');
+// });
+
+/*******************************************************
+ * 
+ *                   POST ROUTES
+ * 
+ * *****************************************************/
 
 // TODO Where is this on my local?
 // Use temp files instead of memory for managing the upload process.
@@ -28,47 +47,59 @@ subtitleRouter.use(fileUpload({
   tempFileDir: '/tmp/'
 }));
 
-// Test get route to pull user object id
-subtitleRouter.get('/subtitleroute', (req, res, next) => {
-  console.log('this is the sub route ');
-  res.render('index');
-});
-
 // Test post route to create collections in database, adding the current 
 // Add upload.single to middleware chain
 subtitleRouter.post("/createsub", (req, res, next) => {
 
-  // In Postman, fileName is the key we use to get the value ( of file) that was uploaded
+  // In Postman, fileName is the key used to get the value ( of file) that was uploaded
   const theFile = req.files.fileName;
   let videoURL = '';
 
-  console.log(" form data-------------------------------------: ",
+  console.log(" REQUEST DATA REQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUEST ",
     req.body, theFile);
 
-  console.log(" Entering cloudinary method data------------------------------------ ");
+  console.log(" Entering cloudinary method EnteringEnteringEnteringEnteringEnteringEnteringEnteringEntering ");
 
-  cloudinary.uploader.upload(theFile.tempFilePath, { resource_type: "video" },
+  cloudinary.uploader.upload(theFile.tempFilePath, {
+    resource_type: "video"
+  },
     function (error, result) {
 
-      console.log(" Starting  cloudinary method data------------------------------------ ");
+      console.log(" Starting  cloudinary method data StartingStartingStartingStartingStartingStartingStartingStartingStartingStarting ");
       console.log('error', error);
       console.log('result', result);
-      console.log(" Exiting cloudinary method data------------------------------------ ");
+      console.log(" Exiting cloudinary method data ExitingExitingExitingExitingExitingExitingExitingExitingExitingExitingExitingExiting ");
 
+      console.log(result.url, '***********************************************');
       videoURL = result.url;
+
+      SubtitleProject
+        .create({ videoURL: videoURL }) //creates new subtitle document in DB with this info
+        .then(subtitleDocument => {
+
+          res.status(401).json({ message: "CREATE WAS SUCCESSFUL!" });
+          // 
+          console.log('Successfully saved video url!');
+          console.log(`subtitleDocument is ======================================================= ${subtitleDocument}`);
+
+
+        })
+        .catch(err => next(err)); // close Dummy.create()
+
     });
 
-  SubtitleProject
-    .create({ videoURL: videoURL }) //creates new subtitle document in DB with this info
-    .then(userDoc => {
+  // SubtitleProject
+  //   .create({ videoURL: videoURL }) //creates new subtitle document in DB with this info
+  //   .then(subtitleDocument => {
 
-      // 
-      console.log('Successfully saved video url!');
-      console.log(userDoc);
+  //     res.status(401).json({ message: "CREATE WAS SUCCESSFUL!" });
+  //     // 
+  //     console.log('Successfully saved video url!');
+  //     console.log(`subtitleDocument is ======================================================= ${subtitleDocument}`);
 
 
-    })
-    .catch(err => next(err)); // close Dummy.create()
+  //   })
+  //   .catch(err => next(err)); // close Dummy.create()
 
 });
 
