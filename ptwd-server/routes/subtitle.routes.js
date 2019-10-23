@@ -2,8 +2,11 @@ const express = require('express');
 const subtitleRouter = express.Router();
 const SubtitleProject = require('../models/SubtitleProject');
 
-subtitleRouter.get('/dashboard', (req,res,next) => {
-  
+subtitleRouter.get('/dashboard', (req,res,next) => {  
+  SubtitleProject
+  .find({ 'userId': req.user._id }, (err, projects) => {
+    console.log(projects);
+  });
   res.render('index');
 });
 
