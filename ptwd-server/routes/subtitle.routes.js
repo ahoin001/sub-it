@@ -51,6 +51,19 @@ subtitleRouter.use(fileUpload({
   tempFileDir: '/tmp/'
 }));
 
+// Route to create a Project
+subtitleRouter.post('/dashboard/create-project', (req,res,next) => {
+  // Creating subtitle project with req.user._id to find collection 
+  const { userId = req.user._id, title, genre, description, createdBy = req.user.fullName, language } = req.body;
+  SubtitleProject
+  .create({ userId , title, genre, description, createdBy , language }) //creates a new subtitle project in the database
+  .then( userDoc => {
+    //   
+   })
+  .catch( err => next(err) ); // close SubtitleProject.create()
+  res.render('index');
+});
+
 // Test post route to create collections in database, adding the current 
 // Add upload.single to middleware chain
 subtitleRouter.post("/createsub", (req, res, next) => {
