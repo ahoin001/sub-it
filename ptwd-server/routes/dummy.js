@@ -1,19 +1,18 @@
 const express = require('express');
 const dummyRouter  = express.Router();
-// const passport = require("passport");
 const Dummy = require('../models/Dummy');
 
 // require dummy model
 const User = require("../models/User");
 
-// Testing route
+// Test get route to pull user object id
 dummyRouter.get('/dummyroute', (req,res,next) => {  
   console.log('this is the current user ID: ' + req.user._id);  
   res.render('index');
 });
 
 
-
+// Test post route to create collections in database, adding the current user id
 dummyRouter.post("/createdummy", (req, res, next) => {
 
   console.log("frontend form data: ", req.body);
