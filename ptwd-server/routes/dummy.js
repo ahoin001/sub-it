@@ -1,23 +1,28 @@
 const express = require('express');
 const dummyRouter  = express.Router();
+// const passport = require("passport");
+const Dummy = require('../models/Dummy');
 
 // require dummy model
 const User = require("../models/User");
 
-dummyRouter.get('/dummyroute', (req,res,next) => {
-  console.log(req.body);
+// Testing route
+dummyRouter.get('/dummyroute', (req,res,next) => {  
+  console.log('this is the current user ID: ' + req.user._id);  
   res.render('index');
 });
+
+
 
 dummyRouter.post("/createdummy", (req, res, next) => {
 
   console.log("frontend form data: ", req.body);
 
-  const { fullName, email } = req.body;
+  const { userId = req.user._id, dummyName } = req.body;
 
 
-  User  // change to dummy 
-   .create({ fullName, email }) //creates new dummy in DB with this info
+  Dummy // change to dummy 
+  .create({ userId, dummyName }) //creates new dummy in DB with this info
   .then( userDoc => { 
 
     // 
@@ -25,7 +30,7 @@ dummyRouter.post("/createdummy", (req, res, next) => {
    
 
    } )
-  .catch( err => next(err) ); // close User.create()
+  .catch( err => next(err) ); // close Dummy.create()
 });
 
 module.exports = dummyRouter;

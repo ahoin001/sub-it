@@ -69,7 +69,7 @@ authRouter.post("/api/login", (req, res, next)  => {
       // set password to undefined so it doesn't get revealed in the client side (browser ==> react app)
       userDoc.encryptedPassword = undefined;
       // send json object with user information to the client
-      res.status(200).json({ userDoc });
+      res.status(200).json({ userDoc });      
     } )
   })(req, res, next);
 })
