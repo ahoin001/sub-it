@@ -11,8 +11,15 @@ const cloudinary = require('../configs/cloudinaryconfig');
 subtitleRouter.get('/dashboard/:id', (req, res, next) => {
   const id = req.params.id;
   console.log(id);
+  
+subtitleRouter.get('/dashboard', (req,res,next) => {  
+  SubtitleProject
+  // Finding all subtitle projects with the userId matching the current session _id
+  // These results should populate the user's landing page/dashboard
+  .find({ 'userId': req.user._id })
+  .then((projects) => {
+  console.log(projects);
   res.render('index');
-});
 
 // TODO Where is this on my local?
 // Use temp files instead of memory for managing the upload process.
