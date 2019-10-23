@@ -15,24 +15,28 @@ const cloudinary = require('../configs/cloudinaryconfig');
  * *****************************************************/
 // TODO Something here is not closed , Whenever it is uncommented it messes up export
 
-// subtitleRouter.get('/dashboard/:id', (req, res, next) => {
-//   const id = req.params.id;
-//   console.log(id);
+subtitleRouter.get('/dashboard/:id', (req, res, next) => {
+  const id = req.params.id;
+  console.log(id);
+});
 
-// subtitleRouter.get('/dashboard', (req,res,next) => {  
-//   SubtitleProject
-//   // Finding all subtitle projects with the userId matching the current session _id
-//   // These results should populate the user's landing page/dashboard
-//   .find({ 'userId': req.user._id })
-//   .then((projects) => {
-//   console.log(projects);
-//   res.render('index');})
+subtitleRouter.get('/dashboard', (req,res,next) => {  
+  SubtitleProject
+  // Finding all subtitle projects with the userId matching the current session _id
+  // These results should populate the user's landing page/dashboard
+  .find({ 'userId': req.user._id })
+  .then((projects) => {
+  console.log(projects);
+  res.render('index');})
 
-// // Test get route to pull user object id
-// subtitleRouter.get('/subtitleroute', (req, res, next) => {
-//   console.log('this is the sub route ');
-//   res.render('index');
-// });
+});
+
+// Test get route to pull user object id
+subtitleRouter.get('/subtitleroute', (req, res, next) => {
+  console.log('this is the sub route ');
+  res.render('index');
+});
+
 
 /*******************************************************
  * 
