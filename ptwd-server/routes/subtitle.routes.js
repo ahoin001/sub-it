@@ -13,7 +13,7 @@ const cloudinary = require('../configs/cloudinaryconfig');
  *                   GET ROUTES
  * 
  * *****************************************************/
-// TODO Something here is not closed , Whenevr it is uncommented it messes up export
+// TODO Something here is not closed , Whenever it is uncommented it messes up export
 
 // subtitleRouter.get('/dashboard/:id', (req, res, next) => {
 //   const id = req.params.id;
@@ -40,7 +40,7 @@ const cloudinary = require('../configs/cloudinaryconfig');
  * 
  * *****************************************************/
 
-// TODO Where is this on my local?
+// TODO Where is this on my local? This is probably okay for demo but not scalable I think
 // Use temp files instead of memory for managing the upload process.
 subtitleRouter.use(fileUpload({
   useTempFiles: true,
@@ -53,6 +53,8 @@ subtitleRouter.post("/createsub", (req, res, next) => {
 
   // In Postman, fileName is the key used to get the value ( of file) that was uploaded
   const theFile = req.files.fileName;
+
+  // To hold value of url cloudinary gives us
   let videoURL = '';
 
   console.log(" REQUEST DATA REQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUEST ",
@@ -82,27 +84,11 @@ subtitleRouter.post("/createsub", (req, res, next) => {
           console.log('Successfully saved video url!');
           console.log(`subtitleDocument is ======================================================= ${subtitleDocument}`);
 
-
         })
-        .catch(err => next(err)); // close Dummy.create()
+        .catch(err => next(err)); 
 
     });
 
-  // SubtitleProject
-  //   .create({ videoURL: videoURL }) //creates new subtitle document in DB with this info
-  //   .then(subtitleDocument => {
-
-  //     res.status(401).json({ message: "CREATE WAS SUCCESSFUL!" });
-  //     // 
-  //     console.log('Successfully saved video url!');
-  //     console.log(`subtitleDocument is ======================================================= ${subtitleDocument}`);
-
-
-  //   })
-  //   .catch(err => next(err)); // close Dummy.create()
-
 });
-
-
 
 module.exports = subtitleRouter;
