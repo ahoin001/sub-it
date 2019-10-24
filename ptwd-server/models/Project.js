@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 
 const ProjectSchema = new Schema({
 
-
   userId: {
     type: String
     // required: true
