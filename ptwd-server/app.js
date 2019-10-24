@@ -33,7 +33,6 @@ app.use(cookieParser());
 //   sourceMap: true
 // }));
 
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -60,13 +59,8 @@ app.use(session({
 // 🚨🚨🚨 must come after the sessions 🚨🚨🚨
 require("./configs/passport/passport.setup")(app);
 
-
-
-
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
-
-
 
 const index = require('./routes/index');
 app.use('/', index);
@@ -79,6 +73,5 @@ app.use('/', dummyRoute);
 
 const projectRoute = require('./routes/project.routes');
 app.use('/', projectRoute);
-
 
 module.exports = app;
