@@ -23,6 +23,8 @@ projectRouter.get('/dashboard', (req,res,next) => {
   console.log(projects);
   res.render('index');})
 
+});
+
 /*******************************************************
  * 
  *                   POST ROUTES
