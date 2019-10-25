@@ -71,4 +71,7 @@ app.use("/", authRoutes);
 const projectRoute = require('./routes/project.routes');
 app.use('/', projectRoute);
 
+const subtitleRoute = require('./routes/subtitle.routes');
+app.use('/', subtitleRoute);
+
 module.exports = app;
