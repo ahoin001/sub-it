@@ -47,9 +47,9 @@ authRouter.post("/api/signup", (req, res, next) => {
             res.status(200).json({ userDoc });
           })
         })
-        .catch(err => next(err)); // close User.create()
+        .catch(err => next(err));
     })
-    .catch(err => next(err)); // close User.findOne()
+    .catch(err => next(err));
 });
 
 authRouter.post("/api/login", (req, res, next) => {

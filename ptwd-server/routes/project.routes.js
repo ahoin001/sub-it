@@ -14,14 +14,21 @@ const cloudinary = require('../configs/cloudinaryconfig');
  * 
  * *****************************************************/
 
-projectRouter.get('/dashboard', (req,res,next) => {  
+projectRouter.get('/dashboard', (req, res, next) => {
+
+  // Finding all  projects with the userId matching the current session _id
   Project
-  // Finding all subtitle projects with the userId matching the current session _id
-  // These results should populate the user's landing page/dashboard
-  .find({ 'userId': req.user._id })
-  .then((projects) => {
-  console.log(projects);
-  res.render('index');})
+
+    // These results should populate the user's landing page/dashboard
+    .find({ 'userId': req.user._id })
+    .then((projects) => {
+      
+      console.log(projects);
+      res.render('index');
+
+    })
+
+});
 
 /*******************************************************
  * 
@@ -57,17 +64,17 @@ projectRouter.post('/dashboard/create-project', (req, res, next) => {
       console.log('error', error);
       console.log('result', result);
 
-      const { userId = req.user._id,videoURL = result.url, title, genre, description, createdBy = req.user.fullName, language } = req.body;
+      const { userId = req.user._id, videoURL = result.url, title, genre, description, createdBy = req.user.fullName, language } = req.body;
 
       Project
-        .create({userId, videoURL,title, genre, description, createdBy, language }) //creates new subtitle document in DB with this info
+        .create({ userId, videoURL, title, genre, description, createdBy, language }) //creates new subtitle document in DB with this info
         .then(projectDocument => {
 
           res.status(401).json({ message: "CREATE WAS SUCCESSFUL!" });
           // 
           console.log('Successfully saved video url!');
           console.log(`projectDocument is ======================================================= ${projectDocument}`);
-          
+
         }).catch(err => next(err))
         .catch(err => next(err));
 
