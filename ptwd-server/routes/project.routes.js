@@ -24,7 +24,8 @@ projectRouter.get('/dashboard', (req, res, next) => {
     .then((projects) => {
 
       console.log(projects);
-      res.render('index');
+      // res.render('index');
+      res.status(401).json({projects});
 
     })
 

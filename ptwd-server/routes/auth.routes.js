@@ -128,21 +128,22 @@ authRouter.post("/user/:id/update",/* ensureLogin.ensureLoggedIn('/'),*/(req, re
 });
 
 // DELETE ROUTE
-authRouter.post('/user/:id/deleteUser', (req, res, next) => {
+//Not necessary for the demo of project
+// authRouter.post('/user/:id/deleteUser', (req, res, next) => {
 
-  console.log('USER BEING DELETED');
-  console.log('=====================================================');
-  console.log(req.params.id);
+//   console.log('USER BEING DELETED');
+//   console.log('=====================================================');
+//   console.log(req.params.id);
 
-  User.findByIdAndRemove(req.params.id)
-    .then(() => {
+//   User.findByIdAndRemove(req.params.id)
+//     .then(() => {
 
-      res.status(401).json({ message: "Delete WAS SUCCESSFUL!" });
+//       res.status(401).json({ message: "Delete WAS SUCCESSFUL!" });
 
-    })
-    .catch((err) => {
-      next(err);
-    })
-})
+//     })
+//     .catch((err) => {
+//       next(err);
+//     })
+// })
 
 module.exports = authRouter;
