@@ -27,12 +27,11 @@ const ProjectSchema = new Schema({
     // required: true,
     // minlength: 2
   },
-  createdBy: {
+  language: {
     type: String
     // required: true,
     // minlength: 2
-  },
-  language: {
+  },createdBy: {
     type: String
     // required: true,
     // minlength: 2

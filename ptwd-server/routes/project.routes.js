@@ -22,7 +22,7 @@ projectRouter.get('/dashboard', (req, res, next) => {
     // These results should populate the user's landing page/dashboard
     .find({ 'userId': req.user._id })
     .then((projects) => {
-      
+
       console.log(projects);
       res.render('index');
 
@@ -32,7 +32,7 @@ projectRouter.get('/dashboard', (req, res, next) => {
 
 /*******************************************************
  * 
- *                   POST ROUTES
+ *                   CREATE ROUTE
  * 
  * *****************************************************/
 
@@ -81,5 +81,47 @@ projectRouter.post('/dashboard/create-project', (req, res, next) => {
     });
 
 });
+
+/********************************************************** 
+  
+ * UPDATE AND DELETE
+ * req.params is whatever the value in the url in place of our parameter is
+***********************************************************/
+
+// UPDATE ROUTE
+projectRouter.post("/project/:id/updateProject", (req, res) => {
+
+  // Find Project in DB using current user ID , and update the username to what is in the form
+  Project
+    .findByIdAndUpdate(req.params.id, { title: req.body.title, genre: req.body.genre, description: req.body.description, language: req.body.language }, { new: true })
+    .then((project) => {
+      console.log('========================================================================================================================================')
+      console.log(project);
+      console.log('========================================================================================================================================')
+      res.json(project)
+    })
+    .catch((err) => {
+      console.log(`Error updating document`, err);
+    })
+
+});
+
+// DELETE ROUTE
+projectRouter.post('/project/:id/deleteProject', (req, res, next) => {
+
+  console.log('PROJECT BEING DELETED');
+  console.log('=====================================================');
+  console.log(req.params.id);
+
+  Project.findByIdAndRemove(req.params.id)
+    .then(() => {
+
+      res.status(401).json({ message: "Delete WAS SUCCESSFUL!" });
+
+    })
+    .catch((err) => {
+      next(err);
+    })
+})
 
 module.exports = projectRouter;
