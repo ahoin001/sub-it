@@ -26,22 +26,25 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
           res.status(401).json({ message: "Subtitle added" });         
           
           
-        }).catch(err => next(err))
+        })
         .catch(err => next(err));
-  // Rendering index as placeholder
-  res.render('index');  
 });
 
 /*******************************************************
  * 
- *                   GET ROUTES
+ *                   DELETE ROUTES
  * 
  * *****************************************************/
 
  subtitleRouter.delete('/:subId/delete-sub', (req,res,next) => {
-  let thisSub = req.params.subId;
-  console.log(thisSub);
+  let subID = req.params.subId;
 
+  Subtitle
+    .findOneAndDelete({ _id: subID })
+    .then(projectDocument => {
+      res.status(200).json({ message: 'Subtitle deleted: ' + projectDocument._id})
+    })
+    .catch(err);
  });
 
 module.exports = subtitleRouter;
