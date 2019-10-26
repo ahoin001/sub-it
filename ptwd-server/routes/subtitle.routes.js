@@ -32,6 +32,26 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
 
 /*******************************************************
  * 
+ *                   PUT ROUTES
+ * 
+ * *****************************************************/
+
+ subtitleRouter.put('/:subId/edit-sub', (req,res,next) => {
+
+  let subID = req.params.subId;
+  const { inTime, outTime, text } = req.body;
+  
+  Subtitle
+    .findByIdAndUpdate(subID, { $set: { inTime, outTime, text }})
+    .then(projectDocument => {
+      res.status(200).json({ message: 'You updated this sub'})
+    })
+    .catch(err);
+ 
+ });
+
+/*******************************************************
+ * 
  *                   DELETE ROUTES
  * 
  * *****************************************************/
@@ -40,7 +60,7 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
   let subID = req.params.subId;
 
   Subtitle
-    .findOneAndDelete({ _id: subID })
+    .findByIdAndDelete(subID)
     .then(projectDocument => {
       res.status(200).json({ message: 'Subtitle deleted: ' + projectDocument._id})
     })

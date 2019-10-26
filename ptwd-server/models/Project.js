@@ -9,6 +9,9 @@ const ProjectSchema = new Schema({
     type: String
     // required: true
   },
+  subtitleArray: {
+    type: Array
+  },
   videoURL: {
     type: String
   },
