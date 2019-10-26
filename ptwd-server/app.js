@@ -68,10 +68,10 @@ app.use('/', index);
 const authRoutes = require("./routes/auth.routes");
 app.use("/", authRoutes);
 
-const dummyRoute = require('./routes/dummy');
-app.use('/', dummyRoute);
-
 const projectRoute = require('./routes/project.routes');
 app.use('/', projectRoute);
+
+const subtitleRoute = require('./routes/subtitle.routes');
+app.use('/', subtitleRoute);
 
 module.exports = app;

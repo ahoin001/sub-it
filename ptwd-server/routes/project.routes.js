@@ -30,6 +30,8 @@ projectRouter.get('/dashboard', (req, res, next) => {
 
 });
 
+});
+
 /*******************************************************
  * 
  *                   POST ROUTES
