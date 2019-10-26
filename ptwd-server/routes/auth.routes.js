@@ -8,12 +8,18 @@ const bcrypt = require("bcryptjs");
 
 const passport = require("passport");
 
+// Import CLoudinary from config files where we set access keys
+const cloudinary = require('../configs/cloudinaryconfig');
+
+// This package allows access to uploaded files from req.files
+const fileUpload = require('express-fileupload');
+
 authRouter.post("/api/signup", (req, res, next) => {
   console.log("frontend form data: ", req.body);
 
-  const { fullName, email, password } = req.body;
+  const { userName, email, password } = req.body;
 
-  if (fullName == "" || email == "" || password.match(/[0-9]/) === null) {
+  if (userName == "" || email == "" || password.match(/[0-9]/) === null) {
     // send JSON file to the frontend if any of these fields are empty or password doesn't contain a number
     res.status(401).json({ message: "All fields need to be filled and password must contain a number! " });
     return;
@@ -32,7 +38,7 @@ authRouter.post("/api/signup", (req, res, next) => {
       const encryptedPassword = bcrypt.hashSync(password, salt);
 
       User
-        .create({ fullName, email, encryptedPassword })
+        .create({ userName, email, encryptedPassword })
         .then(userDoc => {
           // if all good, log in the user automatically
           // "req.login()" is a Passport method that calls "serializeUser()"
@@ -93,4 +99,50 @@ authRouter.get("/api/checkuser", (req, res, next) => {
     res.status(401).json({ userDoc: null })
   }
 })
+
+/********************************************************** 
+  
+ * UPDATE AND DELETE
+ 
+***********************************************************/
+
+// UPDATE ROUTE
+authRouter.post("/user/:id/update",/* ensureLogin.ensureLoggedIn('/'),*/(req, res) => {
+
+  console.log("hjhjjhjhjhjhjhjhjjjhjhj ", req.body)
+  // Find user in DB using current user ID , and update the username to what is in the form
+  User
+    // TODO : params.id is what the user has in :id 
+    //        we serach for logged in users id and make changes
+    .findByIdAndUpdate(req.params.id, { userName: req.body.userName, email: req.body.email, password: req.body.password }, { new: true })
+    .then((user) => {
+      console.log('========================================================================================================================================')
+      console.log(user);
+      console.log('========================================================================================================================================')
+      res.json(user)
+    })
+    .catch((err) => {
+      console.log(`Error updating document`, err);
+    })
+
+});
+
+// DELETE ROUTE
+authRouter.post('/user/:id/deleteUser', (req, res, next) => {
+
+  console.log('USER BEING DELETED');
+  console.log('=====================================================');
+  console.log(req.params.id);
+
+  User.findByIdAndRemove(req.params.id)
+    .then(() => {
+
+      res.status(401).json({ message: "Delete WAS SUCCESSFUL!" });
+
+    })
+    .catch((err) => {
+      next(err);
+    })
+})
+
 module.exports = authRouter;

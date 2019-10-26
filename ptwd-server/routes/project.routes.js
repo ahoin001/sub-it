@@ -67,7 +67,7 @@ projectRouter.post('/dashboard/create-project', (req, res, next) => {
       const { userId = req.user._id, videoURL = result.url, title, genre, description, createdBy = req.user.fullName, language } = req.body;
 
       Project
-        .create({ userId, videoURL, title, genre, description, createdBy, language }) //creates new subtitle document in DB with this info
+        .create({ userId, videoURL, title, genre, description, createdBy, language }) //creates new project document in DB with this info
         .then(projectDocument => {
 
           res.status(401).json({ message: "CREATE WAS SUCCESSFUL!" });
