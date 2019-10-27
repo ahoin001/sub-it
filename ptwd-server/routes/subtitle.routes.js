@@ -69,7 +69,9 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
     .then(projectDocument => {
       res.status(200).json({ message: 'Subtitle deleted: ' + projectDocument._id})
     })
-    .catch(err);
+    .catch(err => next(err));
  });
+
+// TODO: slice (splice?) subtitle from project array
 
 module.exports = subtitleRouter;
