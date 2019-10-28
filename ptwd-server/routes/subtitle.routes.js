@@ -1,6 +1,7 @@
 const express = require('express');
 const subtitleRouter = express.Router();
 const Subtitle = require("../models/Subtitle");
+const Project = require('../models/Project');
 
 /*******************************************************
  * 
@@ -21,11 +22,15 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
   const {projectId = req.params.projectId, inTime, outTime, text } = req.body;
   Subtitle
         .create({projectId, inTime, outTime, text }) //adds new subtitle to current project
-        .then(projectDocument => {
-
-          res.status(401).json({ message: "Subtitle added" });         
+        .then(projectDocument => {    
           
-          
+          let thisProjectID = projectDocument.projectId;         
+          Project
+            .findByIdAndUpdate(thisProjectID, { $push: {subtitleArray: projectDocument}})
+            .then(project => {              
+              console.log(project.subtitleArray);
+            })
+            .catch(err => next(err))
         })
         .catch(err => next(err));
 });
@@ -64,7 +69,9 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
     .then(projectDocument => {
       res.status(200).json({ message: 'Subtitle deleted: ' + projectDocument._id})
     })
-    .catch(err);
+    .catch(err => next(err));
  });
+
+// TODO: slice (splice?) subtitle from project array
 
 module.exports = subtitleRouter;
