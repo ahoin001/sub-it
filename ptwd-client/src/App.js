@@ -1,5 +1,4 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
 
 import axios from "axios";
@@ -11,6 +10,7 @@ import Signup from "./components/user-pages/Signup";
 import Navbar from './components/Navbar';
 import CountriesList from "./components/CountriesList";
 import Home from "./components/Home";
+import ProjectPage from './components/ProjectPage';
 
 
 class App extends React.Component {
@@ -43,19 +43,23 @@ class App extends React.Component {
     // console.log("the state in APPJS: ", this.state);
     return (
       <div >
-      <Navbar />
+        <Navbar />
         <header>
+
           <nav>
             <NavLink to="/" > Home </NavLink>
+            <NavLink to="/aProjectPage" > ProjectPage </NavLink>
             <NavLink to="/signup-page"> Signup </NavLink>
             <NavLink to="/countries" > Countries </NavLink>
           </nav>
+
         </header>
         <Switch>
 
           {/* this is example how we would render component normally */}
           {/* <Route exact path="/somePage" component={ someComponentThatWillRenderWhenThisRouteIsHit }   /> */}
           <Route exact path="/" component={Home} />
+          <Route exact path="/aProjectPage" component={ProjectPage} />
           <Route exact path="/countries" component={CountriesList} />
 
           {/* if we have to pass some props down to a component,
@@ -71,9 +75,6 @@ class App extends React.Component {
           {/* Login component goes here */}
 
         </Switch>
-
-
-        {/* <CountriesList /> */}
 
 
       </div>
