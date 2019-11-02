@@ -8,7 +8,7 @@ import { Switch, Route, NavLink } from "react-router-dom";
 
 
 import Signup from "./components/user-pages/Signup";
-
+import Navbar from './components/Navbar';
 import CountriesList from "./components/CountriesList";
 import Home from "./components/Home";
 
@@ -43,6 +43,7 @@ class App extends React.Component {
     // console.log("the state in APPJS: ", this.state);
     return (
       <div >
+      <Navbar />
         <header>
           <nav>
             <NavLink to="/" > Home </NavLink>
@@ -51,6 +52,7 @@ class App extends React.Component {
           </nav>
         </header>
         <Switch>
+
           {/* this is example how we would render component normally */}
           {/* <Route exact path="/somePage" component={ someComponentThatWillRenderWhenThisRouteIsHit }   /> */}
           <Route exact path="/" component={Home} />
@@ -69,7 +71,11 @@ class App extends React.Component {
           {/* Login component goes here */}
 
         </Switch>
+
+
         {/* <CountriesList /> */}
+
+
       </div>
     );
   }
