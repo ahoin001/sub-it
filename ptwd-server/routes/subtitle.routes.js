@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const subtitleRouter = express.Router();
 const Subtitle = require("../models/Subtitle");
 const Project = require('../models/Project');
@@ -52,7 +53,9 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
       res.status(200).json({ message: 'You updated this sub'})
     })
     .catch(err);
- 
+
+ // TODO: update subtitle in project array
+
  });
 
 /*******************************************************
@@ -63,21 +66,51 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
 
  subtitleRouter.delete('/:subId/delete-sub', (req,res,next) => {
   let subID = req.params.subId;
+  let subIDObject = mongoose.mongo.ObjectID(subID);
+  let projectId = '';
 
   Subtitle
     .findByIdAndDelete(subID)
     .then(projectDocument => {
-      res.status(200).json({ message: 'Subtitle deleted: ' + projectDocument._id + ' from the project: ' + projectDocument.projectId});
-        Project
-        .findOneAndUpdate( { '_id': projectDocument.projectId}, { $pull: {'subtitleArray.projectId': { $eq: 'projectDocument._id'}}})
-        .then(project => {
-          res.status(200).json({ message: 'this is the full project array: ' + project.subtitleArray});
-        })
-        .catch(err => next(err));
+      projectId = projectDocument.projectId;
+      res.status(200).json({ message: 'Subtitle deleted: ' + projectDocument._id + ' from the project: ' + projectDocument.projectId}); 
+      Project
+        .findByIdAndUpdate(projectId, { $pull: { subtitleArray : {_id: subIDObject}}})
+        .then(project => {})
+        .catch(err => next(err));     
     })
     .catch(err => next(err));
  });
 
 // TODO: slice (splice?) subtitle from project array
+
+// Route to test sub deletion from array
+subtitleRouter.get('/:subId/testing-array', (req,res,next) => {
+  let subID = req.params.subId;
+  let subIDObject = mongoose.mongo.ObjectID(subID);
+  let projectId = '';
+
+  Subtitle
+    .findById(subID)
+    .then(projectDocument => {
+      projectId = projectDocument.projectId;
+      res.status(200).json({ message: 'This subtitle belongs to the project ID: ' + projectDocument.projectId})
+      projectId = projectDocument.projectId;
+      console.log('This is the project: ' + projectId);
+      Project
+        .findByIdAndUpdate(projectId, { $pull: { subtitleArray : {_id: subIDObject}}})
+        .then(project => {})
+        .catch(err => next(err));
+    })
+    .catch(err => next(err));
+
+
+  // Project
+  //   .find()
+  //   .then(project => {
+
+  //   })
+  //   .catch(err => next(err));
+});
 
 module.exports = subtitleRouter;
