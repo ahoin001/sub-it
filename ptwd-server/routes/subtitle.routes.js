@@ -67,7 +67,13 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
   Subtitle
     .findByIdAndDelete(subID)
     .then(projectDocument => {
-      res.status(200).json({ message: 'Subtitle deleted: ' + projectDocument._id})
+      res.status(200).json({ message: 'Subtitle deleted: ' + projectDocument._id + ' from the project: ' + projectDocument.projectId});
+        Project
+        .findOneAndUpdate( { '_id': projectDocument.projectId}, { $pull: {'subtitleArray.projectId': { $eq: 'projectDocument._id'}}})
+        .then(project => {
+          res.status(200).json({ message: 'this is the full project array: ' + project.subtitleArray});
+        })
+        .catch(err => next(err));
     })
     .catch(err => next(err));
  });
