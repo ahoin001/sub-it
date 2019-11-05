@@ -18,7 +18,8 @@ const SubtitleSchema = new Schema ({
   text: {
     type: String,
     required: true
-  }
+  },
+  // add inTimeMS and outTimeMS with converted time into milliseconds, to sort array and display
 
 });
 

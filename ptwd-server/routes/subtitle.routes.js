@@ -45,6 +45,8 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
  subtitleRouter.put('/:subId/edit-sub', (req,res,next) => {
 
   let subID = req.params.subId;
+  let subIDObject = mongoose.mongo.ObjectID(subID);
+  let projectId = '';
   const { inTime, outTime, text } = req.body;
   
   Subtitle
