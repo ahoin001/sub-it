@@ -18,6 +18,22 @@ const SubtitleSchema = new Schema ({
   text: {
     type: String,
     required: true
+  },
+  inTimeMS: {
+    type: Number,
+    required: true
+  },
+  outTimeMS: {
+    type: Number,
+    required: true
+  },
+  inTimeVTT: {
+    type: String,
+    required: true
+  },
+  outTimeVTT: {
+    type: String,
+    required: true
   }
 
 });
