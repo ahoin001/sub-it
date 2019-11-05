@@ -8,11 +8,11 @@ const SubtitleSchema = new Schema ({
     required: true
   },
   inTime: {
-    type: String,
+    type: Number,
     required: true
   },
   outTime: {
-    type: String,
+    type: Number,
     required: true
   },
   text: {

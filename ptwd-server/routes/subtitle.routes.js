@@ -20,9 +20,9 @@ const Project = require('../models/Project');
 
 subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {  
   // TODO (in React): add projectId to the URL
-  const {projectId = req.params.projectId, inTime, outTime, text } = req.body;
+  const {projectId = req.params.projectId, inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT } = req.body;
   Subtitle
-        .create({projectId, inTime, outTime, text }) //adds new subtitle to current project
+        .create({projectId, inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT }) //adds new subtitle to current project
         .then(projectDocument => {    
           
           let thisProjectID = projectDocument.projectId;         
@@ -47,12 +47,16 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
   let subID = req.params.subId;
   let subIDObject = mongoose.mongo.ObjectID(subID);
   let projectId = '';
-  const { inTime, outTime, text } = req.body;
+  const { inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT } = req.body;
   
   Subtitle
-    .findByIdAndUpdate(subID, { $set: { inTime, outTime, text }})
+    .findByIdAndUpdate(subID, { $set: { inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT }})
     .then(projectDocument => {
-      res.status(200).json({ message: 'You updated this sub'})
+      res.status(200).json({ message: 'You updated this sub'});
+      Project
+        .findByIdAndUpdate(projectId, { subtitleArray : {_id: subIDObject}, $set: { inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT }})
+        .then(project => {})
+        .catch(err => next(err)); 
     })
     .catch(err);
 
