@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+
 
 import axios from "axios";
 
@@ -13,6 +13,7 @@ import CountriesList from "./components/CountriesList";
 import Home from "./components/Home";
 import ProjectPage from './components/ProjectDetailPage';
 import Project from './components/Project';
+import ProjectsList from './components/ProjectsList';
 
 
 class App extends React.Component {
@@ -54,6 +55,8 @@ class App extends React.Component {
             <NavLink to="/signup-page"> Signup </NavLink>
             <NavLink to="/countries" > Countries </NavLink>
             <NavLink to="/Project" > Project Component </NavLink>
+            <NavLink to="/ProjectsList" > Project List </NavLink>
+            
           </nav>
 
         </header>
@@ -65,6 +68,7 @@ class App extends React.Component {
           <Route exact path="/aProjectPage" component={ProjectPage} />
           <Route exact path="/countries" component={CountriesList} />
           <Route exact path="/project" component={Project} />
+          <Route exact path="/ProjectsList" component={ProjectsList} />
 
           {/* if we have to pass some props down to a component,
           we can't use a standard way of rendering using component={},
