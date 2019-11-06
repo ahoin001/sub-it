@@ -10,7 +10,7 @@ const Project = require('../models/Project');
  * 
  * *****************************************************/
 
-
+ 
 
 /*******************************************************
  * 
@@ -27,7 +27,7 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
           
           let thisProjectID = projectDocument.projectId;         
           Project
-            .findByIdAndUpdate(thisProjectID, { $push: {subtitleArray: projectDocument}})
+            .findByIdAndUpdate(thisProjectID, { $push: {subtitleArray: projectDocument._id}})
             .then(project => {              
               console.log(project.subtitleArray);
             })
@@ -44,21 +44,15 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
 
  subtitleRouter.put('/:subId/edit-sub', (req,res,next) => {
 
-  let subID = req.params.subId;
-  let subIDObject = mongoose.mongo.ObjectID(subID);
-  let projectId = '';
+  let subID = req.params.subId;  
   const { inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT } = req.body;
   
   Subtitle
     .findByIdAndUpdate(subID, { $set: { inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT }})
     .then(projectDocument => {
-      res.status(200).json({ message: 'You updated this sub'});
-      Project
-        .findByIdAndUpdate(projectId, { subtitleArray : {_id: subIDObject}, $set: { inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT }})
-        .then(project => {})
-        .catch(err => next(err)); 
+      res.status(200).json({ message: 'You updated this sub'});            
     })
-    .catch(err);
+    .catch(err => next(err));
 
  // TODO: update subtitle in project array
 
