@@ -31,14 +31,19 @@ projectRouter.get('/dashboard', (req, res, next) => {
 });
 
 
-projectRouter.get('/testsort/:id', (req, res, next) => {
+projectRouter.get('/dashboard/:id', (req, res, next) => {
   Project
     .findById(req.params.id)
-    .populate('subtitleArray')   
-    .then(project => {
-      res.status(200).json({project});
-      console.log(project.subtitleArray);
-      
+    .populate('subtitleArray')    
+    .then(project => {      
+      let subArray = project.subtitleArray;
+      subArray.map( (eachSub) => {
+        console.log(eachSub.inTimeVTT);
+        console.log(eachSub.outTimeVTT);
+        console.log(eachSub.text)
+      });
+
+      res.status(200).json({subArray});
     })
     .catch(err => next(err));
 });
