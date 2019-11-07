@@ -18,8 +18,10 @@ const Project = require('../models/Project');
  * 
  * *****************************************************/
 
+ console.log(" the subtitle route ((((((((((((((((")
 subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {  
   // TODO (in React): add projectId to the URL
+  console.log("this is getting called <<<<<<<<<<<<<< ");
   const {projectId = req.params.projectId, inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT } = req.body;
   Subtitle
         .create({projectId, inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT }) //adds new subtitle to current project
@@ -43,7 +45,7 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
  * *****************************************************/
 
  subtitleRouter.put('/:subId/edit-sub', (req,res,next) => {
-
+console.log("never mind, this is whats actually getting called <<<<<<<<<<<<<<<<<")
   let subID = req.params.subId;  
   const { inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT } = req.body;
   

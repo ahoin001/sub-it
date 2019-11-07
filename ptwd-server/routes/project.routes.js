@@ -14,19 +14,20 @@ const cloudinary = require('../configs/cloudinaryconfig');
  * 
  * *****************************************************/
 
-projectRouter.get('/dashboard', (req, res, next) => {
-
+ console.log("in the project route ************************* ");
+projectRouter.get('/dashboard/:userId', (req, res, next) => {
+  console.log("this is the current user ++++++++++++++++++++++ ", req.params.userId)
   // Finding all  projects with the userId matching the current session _id
   Project
 
     // These results should populate the user's landing page/dashboard
-    .find({ 'userId': req.user._id })
+    .find({userId: req.params.userId})
     .then((projects) => {
-     
+     console.log("this is working !!!!!!!!!!! ", projects)
       // res.render('index');
-      res.status(401).json({projects});
+      res.status(200).json(projects);
 
-    })
+    }).catch(err => res.status(402).json(err))
 
 });
 

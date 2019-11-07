@@ -14,6 +14,8 @@ const cloudinary = require('../configs/cloudinaryconfig');
 // This package allows access to uploaded files from req.files
 const fileUpload = require('express-fileupload');
 
+console.log("this is the auth route ><><><><><><><><><><><")
+
 authRouter.post("/api/signup", (req, res, next) => {
   console.log("frontend form data: ", req.body);
 

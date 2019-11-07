@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// TODO Have these commented so I don't have to fill EVERY key in postman
-
 const ProjectSchema = new Schema({
 
   userId: {
-    type: String
+    type: Schema.Types.ObjectId, ref: 'User'
     // required: true
   },
   subtitleArray: {
