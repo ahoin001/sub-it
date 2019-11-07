@@ -34,8 +34,11 @@ projectRouter.get('/dashboard', (req, res, next) => {
 projectRouter.get('/testsort/:id', (req, res, next) => {
   Project
     .findById(req.params.id)
+    .populate('subtitleArray')   
     .then(project => {
       res.status(200).json({project});
+      console.log(project.subtitleArray);
+      
     })
     .catch(err => next(err));
 });
