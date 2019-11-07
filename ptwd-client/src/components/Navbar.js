@@ -4,7 +4,7 @@ const navbar = props => {
 
     const navBar = {
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         color: "white",
         backgroundColor: "DodgerBlue",
         padding: "10px 0",
@@ -29,10 +29,11 @@ const navbar = props => {
 
             <ul style={navList}>
 
-                <li style={navItems}>Home</li>
-                <li style={navItems}>About</li>
-                <li style={navItems}>WOW</li>
-                <li style={navItems}>Contact</li>
+                <li style={navItems}>{props.home}</li>
+                <li style={navItems}>{props.signUp}</li>
+                <li style={navItems}>{props.login}</li>
+                <li style={navItems}>{props.projectPage}</li>
+                <li style={navItems}>{props.userProjects}</li>
 
             </ul>
 

@@ -48,7 +48,7 @@ export default class Login extends React.Component {
     }
 
     render(){
-        const { fullName, email, password } = this.state;
+        const { email, password } = this.state;
 
         return (
             <section>

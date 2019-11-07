@@ -1,7 +1,7 @@
 //TODO LIST 
 /*
 
-3. Be able to get projects from backend to populate projectlist with project components
+1. Get video url from projects and pass them to Project component prop
 
 */
 
@@ -18,13 +18,16 @@ class ProjectsList extends React.Component {
         super();
 
         this.state = {
+
             // Will Contain array of projects that belong to the loggged in user
             projectsOfUser: []
+
         }
 
     }
 
     componentDidMount = () => {
+
         if(!this.props.theUser) {
             this.props.history.push('/login')
         }
@@ -46,10 +49,33 @@ class ProjectsList extends React.Component {
 
     render() {
 
-        let numOfProjects = [1, 2, 3, 4, 5, 6, 7];
-        const listItems = this.state.projectsOfUser.map((num) =>
-            <li key={num}>
-                <Project />
+        // console.log("here: ", this.state.projectsOfUser)
+
+        // Get video information from projects so that we can we pass each projects info into 
+        //  it's own project component
+
+        // This is an array called projectInfo of objects with info that will be passed
+        const projectsInfo = this.state.projectsOfUser.map(project => {
+        
+            return{
+
+                videoTitle: project.title,
+                videoURL:   project.videoURL,
+                genre:      project.genre,
+                description: project.description
+            
+            }
+        
+        });
+
+        console.log("AAAAAAAAAAAAAAAAaaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAA",projectsInfo);
+
+        const listItems = this.state.projectsOfUser.map((project, i) =>
+            <li key={i}>
+
+                {/* <Project videoURL={vidURLS[i]}/> */}
+                <Project projectObject={projectsInfo[i]}/>
+
             </li>
         );
 
