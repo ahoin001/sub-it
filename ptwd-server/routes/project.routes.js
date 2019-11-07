@@ -32,26 +32,21 @@ projectRouter.get('/dashboard/:userId', (req, res, next) => {
 });
 
 
-projectRouter.get('/testsort/:id', (req, res, next) => {
-
-  // Finding all  projects with the userId matching the current session _id
+projectRouter.get('/dashboard/:id', (req, res, next) => {
   Project
-
-    // These results should populate the user's landing page/dashboard
     .findById(req.params.id)
-    .then((project) => {
+    .populate('subtitleArray')    
+    .then(project => {      
+      let subArray = project.subtitleArray;
+      subArray.map( (eachSub) => {
+        console.log(eachSub.inTimeVTT);
+        console.log(eachSub.outTimeVTT);
+        console.log(eachSub.text)
+      });
 
-      const converted = project.subtitleArray.map(oneSub => {
-        convertToMS(oneSub.inTime);
-      })
-      converted.sort(-1)
-      project.converted = converted;
-      console.log('', project.subtitleArray.sort({'inTime': -1}));
-      // res.render('index');
-      res.status(401).json({project});
-
+      res.status(200).json({subArray});
     })
-
+    .catch(err => next(err));
 });
 
 /*******************************************************

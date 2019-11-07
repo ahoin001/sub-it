@@ -7,9 +7,10 @@ const ProjectSchema = new Schema({
     type: Schema.Types.ObjectId, ref: 'User'
     // required: true
   },
-  subtitleArray: {
-    type: Array
-  },
+  subtitleArray: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Subtitle'
+  }],
   videoURL: {
     type: String
   },
