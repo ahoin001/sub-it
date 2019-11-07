@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactPlayer from 'react-player';
+// import ReactPlayer from 'react-player';
 
 class ProjectPage extends React.Component {
     state = {
@@ -35,22 +35,34 @@ class ProjectPage extends React.Component {
         return (
 
             <div>
-                <video
-                    ref="vidRef"
-                    src="https://assets.polestar.com/video/test/polestar-1_09.mp4"
-                    type="video/mp4"
-                    onMouseOver={this.playVideo}
-                    onMouseLeave={this.pauseVideo}
-                />
 
                 <div>
-                    <button onClick={this.playVideo}>
-                        Play!
-              </button>
-                    <button onClick={this.pauseVideo}>
-                        Pause!
-              </button>
+
+                    <video
+                        id="project-Being-Worked-On"
+                        ref="vidRef"
+                        src="https://assets.polestar.com/video/test/polestar-1_09.mp4"
+                        type="video/mp4"
+                        onMouseOver={this.playVideo}
+                        onMouseLeave={this.pauseVideo}
+                    />
+
+                    <div>
+
+                        {/* Button to work with subtitles (Add proper functions above ) */}
+                        <button onClick={this.playVideo}>
+                            Play!
+                    </button>
+
+                        <button onClick={this.pauseVideo}>
+                            Pause!
+                    </button>
+
+                    </div>
+
                 </div>
+
+
             </div>
 
             /* {<ReactPlayer url='https://res.cloudinary.com/damclaohv/video/upload/v1572728310/osoed8pv6tbs3xz19jkv.mp4'

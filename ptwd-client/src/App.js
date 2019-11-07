@@ -8,6 +8,7 @@ import { Switch, Route, NavLink } from "react-router-dom";
 
 
 import Signup from "./components/user-pages/Signup";
+import Login from "./components/user-pages/Login";
 import Navbar from './components/Navbar';
 import CountriesList from "./components/CountriesList";
 import Home from "./components/Home";
@@ -53,7 +54,8 @@ class App extends React.Component {
             <NavLink to="/" > Home </NavLink>
             <NavLink to="/aProjectPage" > ProjectPage </NavLink>
             <NavLink to="/signup-page"> Signup </NavLink>
-            <NavLink to="/countries" > Countries </NavLink>
+            <NavLink to="/login"> Login </NavLink>
+            {/* <NavLink to="/countries" > Countries </NavLink> */}
             <NavLink to="/Project" > Project Component </NavLink>
             <NavLink to="/ProjectsList" > Project List </NavLink>
             
@@ -68,7 +70,7 @@ class App extends React.Component {
           <Route exact path="/aProjectPage" component={ProjectPage} />
           <Route exact path="/countries" component={CountriesList} />
           <Route exact path="/project" component={Project} />
-          <Route exact path="/ProjectsList" component={ProjectsList} />
+          <Route exact path="/ProjectsList" render={props => <ProjectsList {...props} theUser={this.state.currentUser} />} />
 
           {/* if we have to pass some props down to a component,
           we can't use a standard way of rendering using component={},
@@ -81,6 +83,7 @@ class App extends React.Component {
           } />
 
           {/* Login component goes here */}
+          <Route exact path="/login" render={props => <Login {...props} onUserChange={userDoc => this.syncCurrentUSer(userDoc)} />} />
 
         </Switch>
 

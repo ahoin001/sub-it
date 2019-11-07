@@ -14,7 +14,9 @@ export default class Login extends React.Component {
     }
 
     genericSync(event){
-        // console.log("what is: ", event.target.value)
+        console.log("==============================================================Target is: ", event.target)
+        console.log("==============================================================Value is: ", event.target.value)
+        // Destructure to get naame and value for target 
         const { name, value } = event.target;
         this.setState({ [name]: value });
     }
@@ -33,13 +35,15 @@ export default class Login extends React.Component {
         )
         .then( responseFromServer => {
             // console.log("response is:", responseFromServer);
+            console.log("do I have any props ????????? ", this.props)
             const { userDoc } = responseFromServer.data;
             this.props.onUserChange(userDoc);
-            alert("You are logged in.")
+            this.props.history.push('/ProjectsList');
+            // alert("You are logged in.")
         })
         .catch( err => {
-            // console.log("err: ", err.response)
-            if(err.response.data) return this.setState({ message: err.response.data.message })
+            console.log("err: ", err.response)
+            if(err) return this.setState({ message: err })
         });
     }
 
