@@ -1,12 +1,13 @@
 import React from 'react';
 import { Switch, Route, NavLink } from "react-router-dom";
 
-import Signup from "./user-pages/Signup";
-import Login from "./user-pages/Login"
+import Signup from "./user-components/Signup";
+import Login from "./user-components/Login"
 import Home from "./Home";
 import ProjectPage from './ProjectDetailPage';
 import Project from './Project';
 import ProjectsList from './ProjectsList';
+import ProjectForm from './project-components/Project-Form';
 
 import axios from "axios";
 
@@ -53,6 +54,7 @@ class navBar extends React.Component {
                         <li><NavLink className="link" to="/signup-page"> Signup </NavLink></li>
                         <li><NavLink className="link" to="/login"> Login </NavLink></li>
                         <li><NavLink className="link" to="/ProjectsList" > Project List </NavLink></li>
+                        <li><NavLink className="link" to="/form" > Project Form </NavLink></li>
 
 
                     </ul>
@@ -69,6 +71,7 @@ class navBar extends React.Component {
                     <Route exact path="/aProjectPage" component={ProjectPage} />
                     <Route exact path="/project" component={Project} />
                     <Route exact path="/ProjectsList" render={props => <ProjectsList {...props} theUser={this.state.currentUser} />} />
+                    <Route exact path="/form" render={props => <ProjectForm {...props} theUser={this.state.currentUser} />} />
 
 
                     {/* if we have to pass some props down to a component,
@@ -77,7 +80,7 @@ class navBar extends React.Component {
                     <Route exact path="/signup-page" render={() =>
                         <Signup
                             currentUser={this.state.currentUser}
-                            onUserChange={userDoc => this.syncCurrentUSer(userDoc)}
+                            onUserChange={userDoc => this.syncCurrentUSer(userDoc)} //Pass anonymous function that takes and uses userDoc Parameter in syncCurrentUser Function
                         />
                     } />
 

@@ -18,7 +18,6 @@ const Project = require('../models/Project');
  * 
  * *****************************************************/
 
- console.log(" the subtitle route ((((((((((((((((")
 subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {  
   // TODO (in React): add projectId to the URL
   console.log("this is getting called <<<<<<<<<<<<<< ");

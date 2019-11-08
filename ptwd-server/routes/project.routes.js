@@ -14,16 +14,18 @@ const cloudinary = require('../configs/cloudinaryconfig');
  * 
  * *****************************************************/
 
- console.log("in the project route ************************* ");
 projectRouter.get('/dashboard/:userId', (req, res, next) => {
   console.log("this is the current user ++++++++++++++++++++++ ", req.params.userId)
+
   // Finding all  projects with the userId matching the current session _id
   Project
 
-    // These results should populate the user's landing page/dashboard
-    .find({userId: req.params.userId})
+    // Return all documents with the provided userID
+    .find({ userId: req.params.userId })
     .then((projects) => {
-     console.log("this is working !!!!!!!!!!! ", projects)
+      // Make sure we have projects
+      console.log("this is working !!!!!!!!!!! ", projects)
+
       // res.render('index');
       res.status(200).json(projects);
 
@@ -32,22 +34,22 @@ projectRouter.get('/dashboard/:userId', (req, res, next) => {
 });
 
 
-projectRouter.get('/dashboard/:id', (req, res, next) => {
-  Project
-    .findById(req.params.id)
-    .populate('subtitleArray')    
-    .then(project => {      
-      let subArray = project.subtitleArray;
-      subArray.map( (eachSub) => {
-        console.log(eachSub.inTimeVTT);
-        console.log(eachSub.outTimeVTT);
-        console.log(eachSub.text)
-      });
+// projectRouter.get('/dashboard/:id', (req, res, next) => {
+//   Project
+//     .findById(req.params.id)
+//     .populate('subtitleArray')
+//     .then(project => {
+//       let subArray = project.subtitleArray;
+//       subArray.map((eachSub) => {
+//         console.log(eachSub.inTimeVTT);
+//         console.log(eachSub.outTimeVTT);
+//         console.log(eachSub.text)
+//       });
 
-      res.status(200).json({subArray});
-    })
-    .catch(err => next(err));
-});
+//       res.status(200).json({ subArray });
+//     })
+//     .catch(err => next(err));
+// });
 
 /*******************************************************
  * 
@@ -55,14 +57,29 @@ projectRouter.get('/dashboard/:id', (req, res, next) => {
  * 
  * *****************************************************/
 
+
 // TODO Where is this on my local? This is probably okay for demo but not scalable I think
 // Use temp files instead of memory for managing the upload process.
-projectRouter.use(fileUpload({
-  useTempFiles: true,
-  tempFileDir: '/tmp/'
-}));
+// projectRouter.use(fileUpload({
+//   useTempFiles: true,
+//   tempFileDir: '/tmp/'
+// }));
 
-projectRouter.post('/dashboard/create-project', (req, res, next) => {
+
+projectRouter.post('/dashboard/create-project/:userId', (req, res, next) => {
+
+  console.log('ZZZZZZZZZZZZZZZZZZZCSFWFWEGGGRRGERIGBIOQEGOIEO');
+
+  if (!this.props.theUser) {
+    this.props.history.push('/login')
+  }
+
+  // TODO Where is this on my local? This is probably okay for demo but not scalable I think
+  // Use temp files instead of memory for managing the upload process.
+  projectRouter.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+  }));
 
   // In Postman, fileName is the key used to get the value ( of file) that was uploaded
   const theFile = req.files.fileName;
