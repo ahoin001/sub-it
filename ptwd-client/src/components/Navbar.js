@@ -22,7 +22,7 @@ class navBar extends React.Component {
 
     componentDidMount() {
         // the url of backend port we get information from 
-        axios.get(`${process.env.REACT_APP_API_URL}/api/checkuser`, { withCredentials: true })
+        axios.get(`${process.env.REACT_APP_API_URL}/checkuser`, { withCredentials: true })
             .then(responseFromTheBackend => {
                 // console.log("User in APP.JS: ", responseFromTheBackend)
                 const { userDoc } = responseFromTheBackend.data;
