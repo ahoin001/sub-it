@@ -5,18 +5,15 @@ const userSchema = new Schema({
 
   userName: {
     type: String,
-    required: true,
     minlength: 2
   },
   email: {
     type: String,
-    required: true,
     unique: true,
     match: /^.+@.+\..+$/
   },
   encryptedPassword: {
     type: String,
-    required: true
   },
 
 },

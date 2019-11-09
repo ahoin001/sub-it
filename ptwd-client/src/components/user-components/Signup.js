@@ -78,6 +78,7 @@ export default class Signup extends React.Component {
                     <input
                         value={email} // this.state.email
                         onChange = { event => this.genericSync(event) } 
+                        required
                         type="email"
                         name="email"
                         placeholder="my-email@ironhack.com"
@@ -87,6 +88,7 @@ export default class Signup extends React.Component {
                     <input
                         value={password} // this.state.password
                         onChange = { event => this.genericSync(event) } 
+                        required
                         type="password"
                         name="password"
                         placeholder="***********"
