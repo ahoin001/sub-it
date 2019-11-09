@@ -54,6 +54,7 @@ class ProjectPage extends React.Component {
                     </video>
 
                     <div>
+                        
 
                         {/* Button to work with subtitles (Add proper functions above ) */}
                         {/* <button onClick={this.playVideo}>
