@@ -26,7 +26,7 @@ class ProjectForm extends React.Component {
         // console.log("submitting form");
         event.preventDefault();
 
-        axios.post(`http://localhost:3001/create-project/${this.props.theUser._id}`)// secure sending
+        axios.post(`${process.env.REACT_APP_API_URL}/create-project/${this.props.theUser._id}`)// secure sending
             .then(response => {
                 console.log("...............", response);
                 this.setState({ projectsOfUser: response.data });

@@ -33,7 +33,7 @@ class ProjectsList extends React.Component {
         }
         console.log("this is the did mount and the props ========= ", this.props)
         // Calls endpoint in backend that returns projects from a logged in user 
-        axios.get(`http://localhost:3001/dashboard/${this.props.theUser._id}`)// secure sending
+        axios.get(`${process.env.REACT_APP_API_URL}/dashboard/${this.props.theUser._id}`)// secure sending
             .then(response => {
                 console.log("...............", response);
                 this.setState({ projectsOfUser: response.data });
