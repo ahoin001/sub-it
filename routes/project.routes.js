@@ -14,7 +14,7 @@ const cloudinary = require('../configs/cloudinaryconfig');
  * 
  * *****************************************************/
 
-projectRouter.get('/dashboard/:userId', (req, res, next) => {
+projectRouter.get('/api/dashboard/:userId', (req, res, next) => {
   console.log("this is the current user ++++++++++++++++++++++ ", req.params.userId)
 
   // Finding all  projects with the userId matching the current session _id
