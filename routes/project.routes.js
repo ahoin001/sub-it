@@ -68,7 +68,7 @@ projectRouter.get('/api/dashboard/:userId', (req, res, next) => {
 
 projectRouter.post('/dashboard/create-project/:userId', (req, res, next) => {
 
-  console.log('ZZZZZZZZZZZZZZZZZZZCSFWFWEGGGRRGERIGBIOQEGOIEO');
+  console.log(req.user);
 
   if (!this.props.theUser) {
     this.props.history.push('/login')
