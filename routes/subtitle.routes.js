@@ -21,9 +21,9 @@ const Project = require('../models/Project');
 subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {  
   // TODO (in React): add projectId to the URL
   console.log("this is getting called <<<<<<<<<<<<<< ");
-  const {projectId = req.params.projectId, inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT } = req.body;
+  const {projectId = req.params.projectId, inTime, outTime, text, inTimeVTT, outTimeVTT } = req.body;
   Subtitle
-        .create({projectId, inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT }) //adds new subtitle to current project
+        .create({projectId, inTime, outTime, text, inTimeVTT, outTimeVTT }) //adds new subtitle to current project
         .then(projectDocument => {    
           
           let thisProjectID = projectDocument.projectId;         
@@ -46,10 +46,10 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
  subtitleRouter.put('/:subId/edit-sub', (req,res,next) => {
 console.log("never mind, this is whats actually getting called <<<<<<<<<<<<<<<<<")
   let subID = req.params.subId;  
-  const { inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT } = req.body;
+  const { inTime, outTime, text, inTimeVTT, outTimeVTT } = req.body;
   
   Subtitle
-    .findByIdAndUpdate(subID, { $set: { inTime, outTime, text, inTimeMS, outTimeMS, inTimeVTT, outTimeVTT }})
+    .findByIdAndUpdate(subID, { $set: { inTime, outTime, text, inTimeVTT, outTimeVTT }})
     .then(projectDocument => {
       res.status(200).json({ message: 'You updated this sub'});            
     })
