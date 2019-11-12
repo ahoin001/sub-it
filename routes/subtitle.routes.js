@@ -18,7 +18,7 @@ const Project = require('../models/Project');
  * 
  * *****************************************************/
 
-subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {  
+subtitleRouter.post('api/:projectId/add-sub', (req,res,next) => {  
   // TODO (in React): add projectId to the URL
   console.log("this is getting called <<<<<<<<<<<<<< ");
   const {projectId = req.params.projectId, inTime, outTime, text, inTimeVTT, outTimeVTT } = req.body;
@@ -43,7 +43,7 @@ subtitleRouter.post('/:projectId/add-sub', (req,res,next) => {
  * 
  * *****************************************************/
 
- subtitleRouter.put('/:subId/edit-sub', (req,res,next) => {
+ subtitleRouter.put('api/:subId/edit-sub', (req,res,next) => {
 console.log("never mind, this is whats actually getting called <<<<<<<<<<<<<<<<<")
   let subID = req.params.subId;  
   const { inTime, outTime, text, inTimeVTT, outTimeVTT } = req.body;
@@ -65,7 +65,7 @@ console.log("never mind, this is whats actually getting called <<<<<<<<<<<<<<<<<
  * 
  * *****************************************************/
 
- subtitleRouter.delete('/:subId/delete-sub', (req,res,next) => {
+ subtitleRouter.delete('api/:subId/delete-sub', (req,res,next) => {
   let subID = req.params.subId;
   let subIDObject = mongoose.mongo.ObjectID(subID);
   let projectId = '';
