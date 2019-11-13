@@ -21,11 +21,11 @@ const SubtitleSchema = new Schema ({
   },  
   inTimeVTT: {
     type: String,
-    required: true
+    // required: true
   },
   outTimeVTT: {
     type: String,
-    required: true
+    // required: true
   }
 
 });
