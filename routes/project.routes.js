@@ -34,22 +34,22 @@ projectRouter.get('/api/dashboard/:userId', (req, res, next) => {
 });
 
 
-// projectRouter.get('/dashboard/:id', (req, res, next) => {
-//   Project
-//     .findById(req.params.id)
-//     .populate('subtitleArray')
-//     .then(project => {
-//       let subArray = project.subtitleArray;
-//       subArray.map((eachSub) => {
-//         console.log(eachSub.inTimeVTT);
-//         console.log(eachSub.outTimeVTT);
-//         console.log(eachSub.text)
-//       });
+projectRouter.get('/api/subtitles/:projectId', (req, res, next) => {
+  Project
+    .findById(req.params.projectId)
+    .populate('subtitleArray')
+    .then(project => {
+      let subArray = project.subtitleArray;
+      subArray.map((eachSub) => {
+        console.log(eachSub.inTimeVTT);
+        console.log(eachSub.outTimeVTT);
+        console.log(eachSub.text)
+      });
 
-//       res.status(200).json({ subArray });
-//     })
-//     .catch(err => next(err));
-// });
+      res.status(200).json({ subArray });
+    })
+    .catch(err => next(err));
+});
 
 /*******************************************************
  * 
