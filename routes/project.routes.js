@@ -2,7 +2,7 @@ const express = require('express');
 const projectRouter = express.Router();
 const Project = require("../models/Project");
 
-// // This package allows access to uploaded files from req.files
+// // This package allows access tmp file url for passing to cloudinary
 const fileUpload = require('express-fileupload');
 
 // Import CLoudinary from config files where we set access keys
@@ -10,11 +10,12 @@ const cloudinary = require('../configs/cloudinaryconfig');
 
 /*******************************************************
  * 
- *                   GET ROUTES
+ *                   GET/READ ROUTES
  * 
  * *****************************************************/
 
 projectRouter.get('/api/dashboard/:userId', (req, res, next) => {
+
   console.log("this is the current user ++++++++++++++++++++++ ", req.params.userId)
 
   // Finding all  projects with the userId matching the current session _id
@@ -23,8 +24,9 @@ projectRouter.get('/api/dashboard/:userId', (req, res, next) => {
     // Return all documents with the provided userID
     .find({ userId: req.params.userId })
     .then((projects) => {
+
       // Make sure we have projects
-      console.log("this is working !!!!!!!!!!! ", projects)
+      console.log("CURRENT USER PROJECTS !!!!!!!!!!! ", projects)
 
       // res.render('index');
       res.status(200).json(projects);
@@ -33,82 +35,62 @@ projectRouter.get('/api/dashboard/:userId', (req, res, next) => {
 
 });
 
-
-// projectRouter.get('/dashboard/:id', (req, res, next) => {
-//   Project
-//     .findById(req.params.id)
-//     .populate('subtitleArray')
-//     .then(project => {
-//       let subArray = project.subtitleArray;
-//       subArray.map((eachSub) => {
-//         console.log(eachSub.inTimeVTT);
-//         console.log(eachSub.outTimeVTT);
-//         console.log(eachSub.text)
-//       });
-
-//       res.status(200).json({ subArray });
-//     })
-//     .catch(err => next(err));
-// });
-
 /*******************************************************
  * 
  *                   CREATE ROUTE
  * 
  * *****************************************************/
 
+// Use temp files(paths) for holding projects before passing to cloudinary
+projectRouter.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+}));
 
-// TODO Where is this on my local? This is probably okay for demo but not scalable I think
-// Use temp files instead of memory for managing the upload process.
-// projectRouter.use(fileUpload({
-//   useTempFiles: true,
-//   tempFileDir: '/tmp/'
-// }));
+projectRouter.post('/api/create-project/:userId', async (req, res, next) => {
 
-
-projectRouter.post('/dashboard/create-project/:userId', (req, res, next) => {
-
-  console.log(req.user);
-
-  if (!this.props.theUser) {
-    this.props.history.push('/login')
+  // If user signed in show me
+  if (req.user) {
+    console.log("this is the user info on POST >>>>>>>>>>>>>>>>>>>> ", req.user)
+    console.log("this is the user Req.ID on POST >>>>>>>>>>>>>>>>>>>> ", req.user._id)
   }
 
-  // TODO Where is this on my local? This is probably okay for demo but not scalable I think
-  // Use temp files instead of memory for managing the upload process.
-  projectRouter.use(fileUpload({
-    useTempFiles: true,
-    tempFileDir: '/tmp/'
-  }));
+  console.log(`-------------------------------- ENTERING CREATE PROJECT ROUTE --------------------------------`);
 
-  // In Postman, fileName is the key used to get the value ( of file) that was uploaded
-  const theFile = req.files.fileName;
+  // In req.files, fileName is the key used to get the value of file we are looking for from form that was uploaded front end's form data
+  // req.files.fileNameFromFormdata; In this case, we named the file 'videoFile' in front end so thats how it is accessed
+  // console.log(req.files);
 
-  // To hold value of url cloudinary gives us
-  let videoURL = '';
+  console.log(`++++++++++++++++++ File From Form ++++++++++++++++++`, req.files.videoFile);
 
-  console.log(" REQUEST DATA REQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUESTREQUEST ",
-    req.body, theFile);
+  console.log('&&&&&&&&& STARTING CLOUDINARY &&&&&&&&&')
 
-  console.log(" Entering cloudinary method EnteringEnteringEnteringEnteringEnteringEnteringEnteringEntering ");
-
-  cloudinary.uploader.upload(theFile.tempFilePath, {
-    resource_type: "video"
-  },
+  cloudinary.uploader.upload(req.files.videoFile.tempFilePath, { resource_type: "video" },
     function (error, result) {
 
+      console.log(`@@@@@@@@@ INSIDE COLOUD FUNCTION @@@@@@@@@`)
       console.log('error', error);
-      console.log('result', result);
+
+
+      // Cloudinary response where we can get videos url from after
+      console.log('++++++++++++ Result after saving to cloudinary ++++++++++++ ', result);
+
+
+      // Create object with data from req.body ( Forms other inputs ) to create document of project for the DB
+      // result.url is video url created by cloudinary, result is the response from cloudinary with property url that we want to take
+      // req.user._id is how we get the unique id of signed in user from passport (POST REQUESTS MUSST BE SENT WITH CREDENTIALS TO GET THIS)
 
       const { userId = req.user._id, videoURL = result.url, title, genre, description, createdBy = req.user.fullName, language } = req.body;
+
+      console.log(`@@@@@@@@@@@@@@@ ABOUT TO SAVE PROJECT TO DB @@@@@@@@@@@@@@@`);
 
       Project
         .create({ userId, videoURL, title, genre, description, createdBy, language }) //creates new project document in DB with this info
         .then(projectDocument => {
 
-          res.status(401).json({ message: "CREATE WAS SUCCESSFUL!" });
-          // 
-          console.log('Successfully saved video url!');
+          res.status(200).json({ message: "CREATE WAS SUCCESSFUL!" });
+
+          // Document save was successful, view it's data in console if needed
           console.log(`projectDocument is ======================================================= ${projectDocument}`);
 
         }).catch(err => next(err))
@@ -122,6 +104,7 @@ projectRouter.post('/dashboard/create-project/:userId', (req, res, next) => {
   
  * UPDATE AND DELETE
  * req.params is whatever the value in the url in place of our parameter is
+ 
 ***********************************************************/
 
 // UPDATE ROUTE
@@ -159,5 +142,8 @@ projectRouter.post('/project/:id/deleteProject', (req, res, next) => {
       next(err);
     })
 })
+
+
+
 
 module.exports = projectRouter;

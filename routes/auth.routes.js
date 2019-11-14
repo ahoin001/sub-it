@@ -8,11 +8,6 @@ const bcrypt = require("bcryptjs");
 
 const passport = require("passport");
 
-// Import CLoudinary from config files where we set access keys
-const cloudinary = require('../configs/cloudinaryconfig');
-
-// This package allows access to uploaded files from req.files
-const fileUpload = require('express-fileupload');
 
 authRouter.post("/api/signup", (req, res, next) => {
   console.log("frontend form data: ", req.body);
@@ -60,6 +55,8 @@ authRouter.post("/api/signup", (req, res, next) => {
 
 authRouter.post("/api/login", (req, res, next) => {
   passport.authenticate("local", (err, userDoc, failureDetails) => {
+console.log(`################## I'm in the login route!`)
+
     if (err) {
       res.status(500).json({ message: "Something went wrong with login." })
     }
