@@ -143,7 +143,7 @@ projectRouter.post("/project/:id/updateProject", (req, res) => {
 });
 
 // DELETE ROUTE
-projectRouter.post('/project/:id/deleteProject', (req, res, next) => {
+projectRouter.delete('/api/project/:id/deleteProject', (req, res, next) => {
 
   console.log('PROJECT BEING DELETED');
   console.log('=====================================================');
@@ -152,7 +152,7 @@ projectRouter.post('/project/:id/deleteProject', (req, res, next) => {
   Project.findByIdAndRemove(req.params.id)
     .then(() => {
 
-      res.status(401).json({ message: "Delete WAS SUCCESSFUL!" });
+      res.status(200).json({ message: "Delete WAS SUCCESSFUL!" });
 
     })
     .catch((err) => {
