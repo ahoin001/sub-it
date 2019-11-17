@@ -15,7 +15,6 @@ const cloudinary = require('../configs/cloudinaryconfig');
  * *****************************************************/
 
 projectRouter.get('/api/dashboard/:userId', (req, res, next) => {
-  console.log("this is the current user ++++++++++++++++++++++ ", req.params.userId)
 
   // Finding all  projects with the userId matching the current session _id
   Project
@@ -31,6 +30,16 @@ projectRouter.get('/api/dashboard/:userId', (req, res, next) => {
 
     }).catch(err => res.status(402).json(err))
 
+});
+
+projectRouter.get('/api/project-info/:projectId', (req, res, nex) => {
+  let projectId = req.params.projectId;
+  Project
+    .findById(projectId)
+    .then( project => {
+      return project.videoURL;
+    })
+    .catch(err => next(err));
 });
 
 
