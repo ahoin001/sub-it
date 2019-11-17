@@ -68,6 +68,8 @@ app.use('/', index);
 const authRoutes = require("./routes/auth.routes");
 app.use("/", authRoutes);
 
+app.use('/api', require('./routes/file-upload-routes'));
+
 const projectRoute = require('./routes/project.routes');
 app.use('/', projectRoute);
 
