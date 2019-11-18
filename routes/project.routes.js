@@ -37,7 +37,7 @@ projectRouter.get('/api/project-info/:projectId', (req, res, nex) => {
   Project
     .findById(projectId)
     .then( project => {
-      return project.videoURL;
+      res.status(200).json(project);
     })
     .catch(err => next(err));
 });
